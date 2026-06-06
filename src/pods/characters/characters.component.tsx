@@ -1,26 +1,14 @@
 import type React from "react";
-import { useEffect } from "react";
-import { constants } from "../../config/constants";
+import { useEffect, useState } from "react";
+import { searchCharactersByName } from "../../utils/fetch-characters";
 import "./characters.styles.scss";
 
 export const Characters: React.FC = () => {
+  const [nameCharacter, setNameCharacter] = useState<string>("");
+
   //
-  async function getCharacters(id: string) {
-    try {
-      const response = await fetch(constants.CHARACTERS + id);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log(result);
-    } catch (error: any) {
-      console.error(error?.message);
-    }
-  }
-
   useEffect(() => {
-    getCharacters("");
+    searchCharactersByName(nameCharacter);
   }, []);
 
   return (
