@@ -9,7 +9,10 @@
   .carouselResultsWrapper {
     width: 100%;
     max-width: 60vw;
-    padding-bottom: 2.5rem;
+    padding-top: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-hover);
+    container-type: inline-size;
 
     &:hover {
       .swiper-wrapper {
@@ -38,6 +41,11 @@
     .swiper-pagination {
       border: solid 1px;
       border-radius: 1rem;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+      width: 90cqw;
+
       .swiper-pagination-bullet {
         background: gray;
       }
