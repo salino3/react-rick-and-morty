@@ -7,6 +7,7 @@ import type { Swiper as SwiperType } from "swiper";
 import { Autoplay, Pagination } from "swiper/modules";
 
 import { searchCharactersByName } from "../../utils/fetch-characters";
+import { CardCharacter } from "./components";
 import type { ResultCharacters } from "../../store/interface";
 
 // ⚠️ IMPORTANT: Mandatory Swiper styles
@@ -91,9 +92,7 @@ export const Characters: React.FC = () => {
           <Swiper {...swiperSettings}>
             {resultData.map((data: ResultCharacters) => (
               <SwiperSlide key={data.id}>
-                <div className="cardCharacter">
-                  <h3>{data.name}</h3>
-                </div>
+                <CardCharacter data={data} />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -30,22 +30,7 @@
           justify-content: center;
           align-items: center;
 
-          .cardCharacter {
-            background-color: #1e1e1e;
-            border: 2px solid #333;
-            border-radius: 8px;
-            padding: 2rem;
-            width: 100%;
-            text-align: center;
-            color: white;
-            transition:
-              transform 0.2s ease,
-              border-color 0.2s ease; // Cleaned up transition string
-
-            &:hover {
-              border-color: #00ffcc;
-            }
-          }
+          // .cardCharacter { ..
         }
       }
     }
