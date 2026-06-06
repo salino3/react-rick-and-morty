@@ -16,11 +16,18 @@ export const Characters: React.FC = () => {
     );
   }, []);
 
-  console.log("Result:", resultData);
-
   return (
     <div className="rootCharacters">
       <h1>Characters!</h1>
+      <div className="containerResultsData">
+        {resultData && resultData.length === 0
+          ? "There is no Characters"
+          : resultData.map((data: ResultCharacters) => (
+              <div key={data.id} className="cardCharacter">
+                <h3>{data.name}</h3>
+              </div>
+            ))}
+      </div>
     </div>
   );
 };
