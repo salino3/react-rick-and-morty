@@ -4,4 +4,21 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
+
+  .carouselResultsWrapper {
+    width: 100%;
+    overflow: hidden;
+    max-width: 60vw;
+
+    .slick-slide {
+      display: flex !important;
+      justify-content: center;
+      // margin: 0 !important;
+      // padding: 0 !important;
+    }
+
+    @media screen and (max-width: 1000px) {
+      max-width: 90vw;
+    }
+  }
 }
