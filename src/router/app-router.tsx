@@ -11,11 +11,11 @@ interface PropsRoutes {
 
 const routes: PropsRoutes[] = [
   {
-    path: routesApp?.root,
+    path: routesApp.root,
     element: <LazyHomePage />,
   },
   {
-    path: routesApp?.characters,
+    path: routesApp.characters,
     element: <LazyCharactersPage />,
   },
 ];
@@ -26,5 +26,10 @@ const renderedRoutes = routes.map((route) => (
 ));
 
 export const AppRoutes: React.FC = () => {
-  return <Routes>{renderedRoutes}</Routes>;
+  return (
+    <Routes>
+      {renderedRoutes}
+      <Route path={routesApp.error404} element={<LazyHomePage />} />
+    </Routes>
+  );
 };
