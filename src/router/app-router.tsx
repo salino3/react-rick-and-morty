@@ -1,4 +1,5 @@
 import type { JSX } from "react/jsx-runtime";
+import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { LazyCharactersPage, LazyHomePage, routesApp } from "./interface";
 
@@ -27,9 +28,11 @@ const renderedRoutes = routes.map((route) => (
 
 export const AppRoutes: React.FC = () => {
   return (
-    <Routes>
-      {renderedRoutes}
-      <Route path={routesApp.error404} element={<LazyHomePage />} />
-    </Routes>
+    <Suspense fallback={"Loading..."}>
+      <Routes>
+        {renderedRoutes}
+        <Route path={routesApp.error404} element={<LazyHomePage />} />
+      </Routes>
+    </Suspense>
   );
 };

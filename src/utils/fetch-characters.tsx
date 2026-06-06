@@ -27,8 +27,7 @@ export async function searchCharactersByName(name: string) {
       throw new Error(`Response status: ${response.status}`);
     }
 
-    const result = await response.json();
-    console.log(result);
+    return await response.json();
   } catch (error: any) {
     console.error(error?.message);
   }
