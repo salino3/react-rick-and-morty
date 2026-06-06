@@ -1,11 +1,11 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Characters } from "../../pods/characters";
 import "./characters-layout.styles.scss";
 
 const CharactersLayout: React.FC = () => {
   return (
     <div className="rootCharactersLayout">
-      <Outlet />
+      <Characters />
     </div>
   );
 };
