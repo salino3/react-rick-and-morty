@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { SwiperProps } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper";
 // Import required modules (Pagination for the dot navigation)
 import { Autoplay, Pagination } from "swiper/modules";
 
@@ -15,6 +16,8 @@ import "swiper/css/pagination";
 import "./characters.styles.scss";
 
 export const Characters: React.FC = () => {
+  const swiperRef = useRef<SwiperType | null>(null);
+
   const [nameCharacter, setNameCharacter] = useState<string>("");
   const [resultData, setResultData] = useState<ResultCharacters[]>([]);
 
@@ -48,18 +51,40 @@ export const Characters: React.FC = () => {
     autoplay: {
       delay: 0, // 0 delay forces it to immediately move to the next slide
       disableOnInteraction: false, // Prevents user interactions from permanently killing autoplay
-      pauseOnMouseEnter: true, // ⏸️ Pauses the movement when mouse hovers over the container
+      // pauseOnMouseEnter: true, // ⏸️ Pauses the movement when mouse hovers over the container
     },
     speed: 6000, // 6000ms = 6 seconds per slide transition. Increase this number to make it even slower and smoother!
 
     //  Set the duration of the transition between slides (in milliseconds)
     className: "mySwiper",
+
+    // Capture the instance when Swiper initializes
+    onSwiper: (swiper) => {
+      swiperRef.current = swiper;
+    },
+  };
+
+  //
+  const handleMouseEnter = () => {
+    if (swiperRef.current) {
+      swiperRef.current.autoplay.stop();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (swiperRef.current) {
+      swiperRef.current.autoplay.start();
+    }
   };
 
   return (
     <div className="rootCharacters">
       <h1>Characters!</h1>
-      <div className="carouselResultsWrapper">
+      <div
+        className="carouselResultsWrapper"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         {resultData.length === 0 ? (
           <strong>There are no Characters</strong>
         ) : (
