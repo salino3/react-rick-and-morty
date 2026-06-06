@@ -1,10 +1,13 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import "./home-layout.styles.scss";
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export const HomeLayout: React.FC<Props> = ({ children }) => {
-  return <div className="rootHomeLayout">{children}</div>;
+const HomeLayout: React.FC = () => {
+  return (
+    <div className="rootHomeLayout">
+      <Outlet />
+    </div>
+  );
 };
+
+export default HomeLayout;

@@ -1,4 +1,4 @@
-// import React, { lazy } from "react";
+import React, { lazy } from "react";
 
 interface Routes {
   root: string;
@@ -11,3 +11,12 @@ export const routesApp: Routes = {
   characters: "/dashboard",
   error404: "*",
 };
+
+// Lazy Page Components
+export const LazyHomePage: React.LazyExoticComponent<React.FC> = lazy(
+  () => import("../layouts/home/home.layout"),
+); // with 'export default'
+
+export const LazyCharactersPage: React.LazyExoticComponent<React.FC<{}>> = lazy(
+  () => import("../layouts/characters/characters.layout"),
+);
