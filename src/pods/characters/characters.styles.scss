@@ -1,0 +1,67 @@
+.rootCharacters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+
+  .carouselResultsWrapper {
+    width: 100%;
+    max-width: 60vw;
+    padding-top: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-hover);
+    container-type: inline-size;
+    min-height: 400px;
+    display: flex;
+    align-items: flex-start;
+
+    &:hover {
+      .swiper-wrapper {
+        transition-duration: 0ms !important;
+        // This forces the ongoing 6000ms animation frame to instantly lock in place.
+      }
+    }
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+
+      .swiper-wrapper {
+        transition-timing-function: linear !important;
+
+        .swiper-slide {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+
+          // .cardCharacter { ..
+        }
+      }
+    }
+
+    .swiper-pagination {
+      border: solid 1px;
+      border-radius: 1rem;
+      left: 0;
+      right: 0;
+
+      margin-inline: auto;
+      width: 90cqw;
+
+      .swiper-pagination-bullet {
+        background: gray;
+      }
+
+      .swiper-pagination-bullet-active {
+        background: #00ffcc;
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+      max-width: 90vw;
+    }
+  }
+}
