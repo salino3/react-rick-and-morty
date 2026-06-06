@@ -9,22 +9,23 @@
   .carouselResultsWrapper {
     width: 100%;
     max-width: 60vw;
-    padding-bottom: 2.5rem; // Gives spacing at the bottom so navigation dots don't overflow
+    padding-bottom: 2.5rem;
 
-    // Swiper main wrapper
     .swiper {
       width: 100%;
       height: 100%;
+
+      .swiper-wrapper {
+        transition-timing-function: linear !important;
+      }
     }
 
-    // Individual slide container
     .swiper-slide {
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    // Your custom character card layout
     .cardCharacter {
       background-color: #1e1e1e;
       border: 2px solid #333;
@@ -33,9 +34,14 @@
       width: 100%;
       text-align: center;
       color: white;
+      transition: transform 0.2s ease;
+
+      // Optional design polish: add a subtle card reaction on hover
+      &:hover {
+        border-color: #00ffcc;
+      }
     }
 
-    // Optional style overrides: customized active bullet color
     .swiper-pagination-bullet-active {
       background: #00ffcc;
     }

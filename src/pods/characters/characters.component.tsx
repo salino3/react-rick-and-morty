@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { SwiperProps } from "swiper/react";
 // Import required modules (Pagination for the dot navigation)
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 
 import { searchCharactersByName } from "../../utils/fetch-characters";
 import type { ResultCharacters } from "../../store/interface";
@@ -15,7 +15,7 @@ import "swiper/css/pagination";
 import "./characters.styles.scss";
 
 export const Characters: React.FC = () => {
-  const [nameCharacter] = useState<string>("");
+  const [nameCharacter, setNameCharacter] = useState<string>("");
   const [resultData, setResultData] = useState<ResultCharacters[]>([]);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export const Characters: React.FC = () => {
   //
   const swiperSettings: SwiperProps = {
     // Load the pagination dot module
-    modules: [Pagination],
+    modules: [Pagination, Autoplay],
     // Enable clickable pagination dots
     pagination: { clickable: true },
     // 🔄 TRUE INFINITE LOOP EFFECT ACTIVATED!
@@ -43,6 +43,16 @@ export const Characters: React.FC = () => {
     spaceBetween: 20,
     // Allow touch/drag dragging
     allowTouchMove: true,
+
+    // Configure 'Autoplay' for continuous crawl and hover pause
+    autoplay: {
+      delay: 0, // 0 delay forces it to immediately move to the next slide
+      disableOnInteraction: false, // Prevents user interactions from permanently killing autoplay
+      pauseOnMouseEnter: true, // ⏸️ Pauses the movement when mouse hovers over the container
+    },
+    speed: 6000, // 6000ms = 6 seconds per slide transition. Increase this number to make it even slower and smoother!
+
+    //  Set the duration of the transition between slides (in milliseconds)
     className: "mySwiper",
   };
 
