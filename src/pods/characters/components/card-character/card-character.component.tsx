@@ -10,6 +10,7 @@ export const CardCharacter: React.FC<Props> = ({ data }) => {
   return (
     <div className="cardCharacter">
       <h3>{data.name}</h3>
+      <img src={data.image} alt="" />
     </div>
   );
 };
