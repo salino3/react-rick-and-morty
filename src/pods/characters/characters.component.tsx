@@ -64,10 +64,10 @@ export const Characters: React.FC = () => {
   //
   useEffect(() => {
     if (swiperRef.current) {
-      swiperRef.current.update(); // Ricalcola le slide e aggiorna i cloni del loop
+      swiperRef.current.update(); // Recalculate slides and update loop clones
       if (swiperRef.current.autoplay) {
         swiperRef.current.autoplay.stop();
-        swiperRef.current.autoplay.start(); // Forza il riavvio immediato dell'autoscroll
+        swiperRef.current.autoplay.start(); // Force autoscroll to restart immediately
       }
     }
     if (swiperRef02.current) {
