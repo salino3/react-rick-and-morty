@@ -160,6 +160,7 @@ export const Characters: React.FC = () => {
     }
   };
 
+  console.log("clog1", resultData);
   return (
     <div ref={divRef} className="rootCharacters">
       <h1>Characters!</h1>
@@ -192,7 +193,7 @@ export const Characters: React.FC = () => {
           onMouseEnter={handleMouseEnter02}
           onMouseLeave={handleMouseLeave02}
         >
-          {resultData.length > 10 ? (
+          {resultData.length < 10 ? (
             <strong>There are no Characters</strong>
           ) : (
             <Swiper {...swiperSettings02}>
