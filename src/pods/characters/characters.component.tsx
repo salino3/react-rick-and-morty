@@ -35,6 +35,29 @@ export const Characters: React.FC = () => {
   }, [nameCharacter]);
 
   //
+  const setupFastPagination = (swiper: SwiperType) => {
+    const bullets = swiper.pagination.bullets;
+    if (!bullets) return;
+
+    bullets.forEach((bullet, index) => {
+      const newBullet = bullet.cloneNode(true) as HTMLElement;
+      bullet.parentNode?.replaceChild(newBullet, bullet);
+      bullets[index] = newBullet;
+
+      newBullet.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        swiper.slideToLoop(index, 300);
+
+        if (swiper.autoplay) {
+          swiper.autoplay.stop();
+        }
+      });
+    });
+  };
+
+  //
   const swiperSettings: SwiperProps = {
     // Load the pagination dot module
     modules: [Pagination, Autoplay],
@@ -63,6 +86,9 @@ export const Characters: React.FC = () => {
     // Capture the instance when Swiper initializes
     onSwiper: (swiper) => {
       swiperRef.current = swiper;
+    },
+    onPaginationRender: (swiper) => {
+      setupFastPagination(swiper);
     },
   };
 
@@ -110,6 +136,9 @@ export const Characters: React.FC = () => {
     // Capture the instance when Swiper initializes
     onSwiper: (swiper) => {
       swiperRef02.current = swiper;
+    },
+    onPaginationRender: (swiper) => {
+      setupFastPagination(swiper);
     },
   };
 
