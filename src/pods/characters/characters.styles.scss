@@ -6,7 +6,8 @@
   gap: 1rem;
   width: 100%;
 
-  .carouselResultsWrapper {
+  .carouselResultsWrapper,
+  .carouselResultsWrapper02 {
     width: 100%;
     max-width: 60vw;
     padding-top: 1rem;
@@ -17,12 +18,12 @@
     display: flex;
     align-items: flex-start;
 
-    &:hover {
-      .swiper-wrapper {
-        transition-duration: 0ms !important;
-        // This forces the ongoing 6000ms animation frame to instantly lock in place.
-      }
-    }
+    // &:hover {
+    //   .swiper-wrapper {
+    //     transition-duration: 0ms !important;
+    //     // This forces the ongoing 6000ms animation frame to instantly lock in place.
+    //   }
+    // }
 
     .swiper {
       width: 100%;
