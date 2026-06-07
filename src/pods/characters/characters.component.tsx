@@ -30,6 +30,8 @@ const setupFastPagination = (swiper: SwiperType) => {
       e.preventDefault();
       e.stopPropagation();
 
+      swiper.params.speed = 300;
+      // swiper.setTransition(300);
       swiper.slideToLoop(index, 300);
 
       if (swiper.autoplay) {
@@ -60,8 +62,25 @@ export const Characters: React.FC = () => {
   }, [searchNameCharacter]);
 
   //
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.update(); // Ricalcola le slide e aggiorna i cloni del loop
+      if (swiperRef.current.autoplay) {
+        swiperRef.current.autoplay.stop();
+        swiperRef.current.autoplay.start(); // Forza il riavvio immediato dell'autoscroll
+      }
+    }
+    if (swiperRef02.current) {
+      swiperRef02.current.update();
+      if (swiperRef02.current.autoplay) {
+        swiperRef02.current.autoplay.stop();
+        swiperRef02.current.autoplay.start();
+      }
+    }
+  }, [resultData]);
 
-  //
+  const currentSlidesPerView = dimensions?.width > 650 ? 2 : 1;
+
   const swiperSettings: SwiperProps = {
     // Load the pagination dot module
     modules: [Pagination, Autoplay],
@@ -98,46 +117,40 @@ export const Characters: React.FC = () => {
 
   //
   const handleMouseEnter = () => {
-    if (swiperRef.current) {
-      swiperRef.current.autoplay.stop();
+    const swiper = swiperRef.current;
+    if (swiper && swiper.autoplay) {
+      swiper.autoplay.stop();
+      swiper.params.speed = 300;
+      // swiper.setTransition(300);
+      swiper.slideToClosest(300, false);
     }
   };
 
   const handleMouseLeave = () => {
-    if (swiperRef.current) {
-      swiperRef.current.autoplay.paused = false;
-      swiperRef.current.autoplay.start();
+    const swiper = swiperRef.current;
+    if (swiper && swiper.autoplay) {
+      swiper.params.speed = 6000;
+      swiper.autoplay.paused = false;
+      swiper.autoplay.start();
     }
   };
 
   // swiperSettings02
   const swiperSettings02: SwiperProps = {
-    // Load the pagination dot module
     modules: [Pagination, Autoplay],
-    // Enable clickable pagination dots
     pagination: { clickable: true },
-    // 🔄 TRUE INFINITE LOOP EFFECT ACTIVATED!
     loop: true,
-    // Number of cards visible at the same time
-    slidesPerView: dimensions?.width > 650 ? 2 : 1,
-    // Space between cards (in pixels)
+    slidesPerView: currentSlidesPerView,
     spaceBetween: 20,
-    // Allow touch/drag dragging
     allowTouchMove: true,
-
-    // Configure 'Autoplay' for continuous crawl and hover pause
     autoplay: {
-      delay: 0, // 0 delay forces it to immediately move to the next slide
-      disableOnInteraction: false, // Prevents user interactions from permanently killing autoplay
-      pauseOnMouseEnter: false, // ⏸️ Pauses the movement when mouse hovers over the container
+      delay: 0,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: false,
       reverseDirection: true,
     },
-    speed: 6000, // 6000ms = 6 seconds per slide transition. Increase this number to make it even slower and smoother!
-
-    //  Set the duration of the transition between slides (in milliseconds)
+    speed: 6000,
     className: "mySwiper",
-
-    // Capture the instance when Swiper initializes
     onSwiper: (swiper) => {
       swiperRef02.current = swiper;
     },
@@ -146,21 +159,25 @@ export const Characters: React.FC = () => {
     },
   };
 
-  //
   const handleMouseEnter02 = () => {
-    if (swiperRef02.current) {
-      swiperRef02.current.autoplay.stop();
+    const swiper = swiperRef02.current;
+    if (swiper && swiper.autoplay) {
+      swiper.autoplay.stop();
+      swiper.params.speed = 300;
+      // swiper.setTransition(300);
+      swiper.slideToClosest(300, false);
     }
   };
 
   const handleMouseLeave02 = () => {
-    if (swiperRef02.current) {
-      swiperRef02.current.autoplay.paused = false;
-      swiperRef02.current.autoplay.start();
+    const swiper = swiperRef02.current;
+    if (swiper && swiper.autoplay) {
+      swiper.params.speed = 6000;
+      swiper.autoplay.paused = false;
+      swiper.autoplay.start();
     }
   };
 
-  console.log("clog1", resultData);
   return (
     <div ref={divRef} className="rootCharacters">
       <h1>Characters!</h1>
@@ -180,30 +197,27 @@ export const Characters: React.FC = () => {
         ) : (
           <Swiper {...swiperSettings}>
             {resultData.slice(0, 10).map((data: ResultCharacters) => (
-              <SwiperSlide key={data.id}>
+              <SwiperSlide key={`top-${data.id}`}>
                 <CardCharacter data={data} />
               </SwiperSlide>
             ))}
           </Swiper>
         )}
       </div>
+
       {resultData.length > 10 && (
         <div
           className="carrouselResultsWrapper02"
           onMouseEnter={handleMouseEnter02}
           onMouseLeave={handleMouseLeave02}
         >
-          {resultData.length < 10 ? (
-            <strong>There are no Characters</strong>
-          ) : (
-            <Swiper {...swiperSettings02}>
-              {resultData.slice(10, 20).map((data: ResultCharacters) => (
-                <SwiperSlide key={data.id}>
-                  <CardCharacter data={data} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
+          <Swiper {...swiperSettings02}>
+            {resultData.slice(10, 20).map((data: ResultCharacters) => (
+              <SwiperSlide key={`bottom-${data.id}`}>
+                <CardCharacter data={data} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       )}
     </div>
