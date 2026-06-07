@@ -36,6 +36,7 @@ export const FormSearchCharacter: React.FC<Props> = ({
           <input
             type="text"
             name="name"
+            defaultValue={state.name ?? ""}
             placeholder="Search a character"
             id={"name"}
           />
