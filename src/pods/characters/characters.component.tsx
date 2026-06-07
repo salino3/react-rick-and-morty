@@ -169,7 +169,7 @@ export const Characters: React.FC = () => {
         setSearchNameCharacter={setSearchNameCharacter}
       />
 
-      {/* <div
+      <div
         className="carrouselResultsWrapper"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -186,23 +186,25 @@ export const Characters: React.FC = () => {
           </Swiper>
         )}
       </div>
-       <div
-        className="carrouselResultsWrapper02"
-        onMouseEnter={handleMouseEnter02}
-        onMouseLeave={handleMouseLeave02}
-      >
-        {resultData.length === 0 ? (
-          <strong>There are no Characters</strong>
-        ) : (
-          <Swiper {...swiperSettings02}>
-            {resultData.slice(10, 20).map((data: ResultCharacters) => (
-              <SwiperSlide key={data.id}>
-                <CardCharacter data={data} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
-      </div> */}
+      {resultData.length > 10 && (
+        <div
+          className="carrouselResultsWrapper02"
+          onMouseEnter={handleMouseEnter02}
+          onMouseLeave={handleMouseLeave02}
+        >
+          {resultData.length > 10 ? (
+            <strong>There are no Characters</strong>
+          ) : (
+            <Swiper {...swiperSettings02}>
+              {resultData.slice(10, 20).map((data: ResultCharacters) => (
+                <SwiperSlide key={data.id}>
+                  <CardCharacter data={data} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </div>
+      )}
     </div>
   );
 };
