@@ -7,7 +7,7 @@ import type { Swiper as SwiperType } from "swiper";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useResizeObserver } from "../../hooks";
 import { searchCharactersByName } from "../../utils/fetch-characters";
-import { CardCharacter } from "./components";
+import { CardCharacter, FormSearchCharacter } from "./components";
 import type { ResultCharacters } from "../../store/interface";
 
 // ⚠️ IMPORTANT: Mandatory Swiper styles
@@ -15,7 +15,29 @@ import "swiper/css";
 import "swiper/css/pagination";
 //
 import "./characters.styles.scss";
-import { FormSearchCharacter } from "./components/form-search-character/form-search-character.component";
+
+//
+const setupFastPagination = (swiper: SwiperType) => {
+  const bullets = swiper.pagination.bullets;
+  if (!bullets) return;
+
+  bullets.forEach((bullet, index) => {
+    const newBullet = bullet.cloneNode(true) as HTMLElement;
+    bullet.parentNode?.replaceChild(newBullet, bullet);
+    bullets[index] = newBullet;
+
+    newBullet.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      swiper.slideToLoop(index, 300);
+
+      if (swiper.autoplay) {
+        swiper.autoplay.stop();
+      }
+    });
+  });
+};
 
 export const Characters: React.FC = () => {
   const [divRef, dimensions] = useResizeObserver<HTMLDivElement>();
@@ -38,27 +60,6 @@ export const Characters: React.FC = () => {
   }, [nameCharacter]);
 
   //
-  const setupFastPagination = (swiper: SwiperType) => {
-    const bullets = swiper.pagination.bullets;
-    if (!bullets) return;
-
-    bullets.forEach((bullet, index) => {
-      const newBullet = bullet.cloneNode(true) as HTMLElement;
-      bullet.parentNode?.replaceChild(newBullet, bullet);
-      bullets[index] = newBullet;
-
-      newBullet.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        swiper.slideToLoop(index, 300);
-
-        if (swiper.autoplay) {
-          swiper.autoplay.stop();
-        }
-      });
-    });
-  };
 
   //
   const swiperSettings: SwiperProps = {
