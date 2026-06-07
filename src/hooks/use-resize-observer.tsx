@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, MutableRefObject } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Dimensions {
   width: number;
@@ -6,7 +6,7 @@ interface Dimensions {
 }
 
 export function useResizeObserver<T extends HTMLElement>(): [
-  MutableRefObject<T | null>,
+  React.RefObject<T | null>,
   Dimensions,
 ] {
   const ref = useRef<T | null>(null);
@@ -16,6 +16,8 @@ export function useResizeObserver<T extends HTMLElement>(): [
   });
 
   useEffect(() => {
+    const currentRef = ref.current;
+
     const observer = new ResizeObserver((entries) => {
       if (entries[0]) {
         const { width, height } = entries[0].contentRect;
@@ -23,13 +25,13 @@ export function useResizeObserver<T extends HTMLElement>(): [
       }
     });
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
