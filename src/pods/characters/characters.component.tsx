@@ -45,11 +45,11 @@ export const Characters: React.FC = () => {
   const swiperRef = useRef<SwiperType | null>(null);
   const swiperRef02 = useRef<SwiperType | null>(null);
 
-  const [nameCharacter, setNameCharacter] = useState<string>("");
+  const [searchNameCharacter, setSearchNameCharacter] = useState<string>("");
   const [resultData, setResultData] = useState<ResultCharacters[]>([]);
 
   useEffect(() => {
-    searchCharactersByName(nameCharacter)
+    searchCharactersByName(searchNameCharacter)
       .then((res) => {
         setResultData(res && Array.isArray(res.results) ? res.results : []);
       })
@@ -57,7 +57,7 @@ export const Characters: React.FC = () => {
         console.error("Error loading characters:", err);
         setResultData([]);
       });
-  }, [nameCharacter]);
+  }, [searchNameCharacter]);
 
   //
 
@@ -164,7 +164,10 @@ export const Characters: React.FC = () => {
     <div ref={divRef} className="rootCharacters">
       <h1>Characters!</h1>
 
-      <FormSearchCharacter />
+      <FormSearchCharacter
+        searchNameCharacter={searchNameCharacter}
+        setSearchNameCharacter={setSearchNameCharacter}
+      />
 
       {/* <div
         className="carrouselResultsWrapper"
