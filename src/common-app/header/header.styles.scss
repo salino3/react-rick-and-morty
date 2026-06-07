@@ -4,11 +4,13 @@
   align-items: center;
   border: solid 5px;
   padding: 1rem;
+  width: 100%;
+  max-width: 500px;
   nav {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    width: 100%;
     ul {
       display: flex;
       flex-direction: row;
@@ -16,11 +18,15 @@
       align-items: center;
       list-style-type: none;
       flex-grow: 1;
+
       width: 100%;
-      width: 500px;
       max-width: 90wh;
       min-width: max-content;
       gap: 1rem;
+
+      @media screen and (max-width: 724px) {
+        flex-direction: column;
+      }
 
       li {
         display: flex;
