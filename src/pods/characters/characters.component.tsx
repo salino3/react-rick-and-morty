@@ -5,7 +5,7 @@ import type { SwiperProps } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 // Import required modules (Pagination for the dot navigation)
 import { Autoplay, Pagination } from "swiper/modules";
-
+import { useResizeObserver } from "../../hooks";
 import { searchCharactersByName } from "../../utils/fetch-characters";
 import { CardCharacter } from "./components";
 import type { ResultCharacters } from "../../store/interface";
@@ -17,6 +17,8 @@ import "swiper/css/pagination";
 import "./characters.styles.scss";
 
 export const Characters: React.FC = () => {
+  const [divRef, dimensions] = useResizeObserver<HTMLDivElement>();
+
   const swiperRef = useRef<SwiperType | null>(null);
   const swiperRef02 = useRef<SwiperType | null>(null);
 
@@ -66,7 +68,7 @@ export const Characters: React.FC = () => {
     // 🔄 TRUE INFINITE LOOP EFFECT ACTIVATED!
     loop: true,
     // Number of cards visible at the same time
-    slidesPerView: 2,
+    slidesPerView: dimensions?.width > 650 ? 2 : 1,
     // Space between cards (in pixels)
     spaceBetween: 20,
     // Allow touch/drag dragging
@@ -115,7 +117,7 @@ export const Characters: React.FC = () => {
     // 🔄 TRUE INFINITE LOOP EFFECT ACTIVATED!
     loop: true,
     // Number of cards visible at the same time
-    slidesPerView: 2,
+    slidesPerView: dimensions?.width > 650 ? 2 : 1,
     // Space between cards (in pixels)
     spaceBetween: 20,
     // Allow touch/drag dragging
@@ -157,7 +159,7 @@ export const Characters: React.FC = () => {
   };
 
   return (
-    <div className="rootCharacters">
+    <div ref={divRef} className="rootCharacters">
       <h1>Characters!</h1>
       <div
         className="carouselResultsWrapper"
