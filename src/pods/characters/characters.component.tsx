@@ -73,35 +73,6 @@ export const Characters: React.FC = () => {
   const [searchNameCharacter, setSearchNameCharacter] = useState<string>("");
   const [resultData, setResultData] = useState<ResultCharacters[]>([]);
 
-  useEffect(() => {
-    searchCharactersByName(searchNameCharacter)
-      .then((res) => {
-        setResultData(res && Array.isArray(res.results) ? res.results : []);
-      })
-      .catch((err) => {
-        console.error("Error loading characters:", err);
-        setResultData([]);
-      });
-  }, [searchNameCharacter]);
-
-  //
-  useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef.current.update(); // Recalculate slides and update loop clones
-      if (swiperRef.current.autoplay) {
-        swiperRef.current.autoplay.stop();
-        swiperRef.current.autoplay.start(); // Force autoscroll to restart immediately
-      }
-    }
-    if (swiperRef02.current) {
-      swiperRef02.current.update();
-      if (swiperRef02.current.autoplay) {
-        swiperRef02.current.autoplay.stop();
-        swiperRef02.current.autoplay.start();
-      }
-    }
-  }, [resultData]);
-
   const currentSlidesPerView = dimensions?.width > 650 ? 2 : 1;
 
   const swiperSettings: SwiperProps = {
@@ -192,6 +163,35 @@ export const Characters: React.FC = () => {
       swiper.autoplay.start();
     }
   };
+
+  useEffect(() => {
+    searchCharactersByName(searchNameCharacter)
+      .then((res) => {
+        setResultData(res && Array.isArray(res.results) ? res.results : []);
+      })
+      .catch((err) => {
+        console.error("Error loading characters:", err);
+        setResultData([]);
+      });
+  }, [searchNameCharacter]);
+
+  //
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.update(); // Recalculate slides and update loop clones
+      if (swiperRef.current.autoplay) {
+        swiperRef.current.autoplay.stop();
+        swiperRef.current.autoplay.start(); // Force autoscroll to restart immediately
+      }
+    }
+    if (swiperRef02.current) {
+      swiperRef02.current.update();
+      if (swiperRef02.current.autoplay) {
+        swiperRef02.current.autoplay.stop();
+        swiperRef02.current.autoplay.start();
+      }
+    }
+  }, [resultData]);
 
   return (
     <div ref={divRef} className="rootCharacters">

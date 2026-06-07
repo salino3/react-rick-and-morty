@@ -31,7 +31,7 @@ export const FormSearchCharacter: React.FC<Props> = ({
   return (
     <form id="rootFormSearchCharacter" action={formAction}>
       <fieldset disabled={isPending}>
-        <legend>Discover Your Collection</legend>
+        <legend>Discover the Collection</legend>
         <div className="boxInput boxName">
           <input
             type="text"
@@ -39,6 +39,9 @@ export const FormSearchCharacter: React.FC<Props> = ({
             placeholder="Search a character"
             id={"name"}
           />
+          <div className="boxErrorIdForm">
+            {state.error && <strong>{state.error}</strong>}
+          </div>
         </div>
         <SubmitBasicBtn searchName={searchNameCharacter} />
       </fieldset>
