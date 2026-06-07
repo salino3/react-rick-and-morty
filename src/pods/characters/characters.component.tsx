@@ -30,14 +30,37 @@ const setupFastPagination = (swiper: SwiperType) => {
       e.preventDefault();
       e.stopPropagation();
 
-      swiper.params.speed = 300;
-      // swiper.setTransition(300);
-      swiper.slideToLoop(index, 300);
-
       if (swiper.autoplay) {
         swiper.autoplay.stop();
       }
+
+      swiper.params.speed = 300;
+      swiper.slideToLoop(index, 300);
     });
+  });
+};
+
+//
+// JAVASCRIPT FUNCTION FOR THE MAGNETIZED SNAP EFFECT WITHOUT CSS CONFLICTS
+const triggerSnapEffect = (swiper: SwiperType) => {
+  if (!swiper.autoplay) return;
+
+  // 1. Immediately stop the continuous linear autoscroll
+  swiper.autoplay.stop();
+
+  // 2. Get the current precise pixel position (translate) from Swiper
+  const currentTranslate = swiper.getTranslate();
+
+  // 3. Set the internal transition speed parameter for upcoming interactions
+  swiper.params.speed = 300;
+
+  // 4. Force an immediate translation to the current position over 300ms.
+  // This instantly breaks the CSS transition animation that was locked at 6 seconds.
+  swiper.translateTo(currentTranslate, 300, false, false);
+
+  // 5. One frame later, perform the final geometric snap to the closest card
+  requestAnimationFrame(() => {
+    swiper.slideToClosest(300, false);
   });
 };
 
@@ -117,12 +140,8 @@ export const Characters: React.FC = () => {
 
   //
   const handleMouseEnter = () => {
-    const swiper = swiperRef.current;
-    if (swiper && swiper.autoplay) {
-      swiper.autoplay.stop();
-      swiper.params.speed = 300;
-      // swiper.setTransition(300);
-      swiper.slideToClosest(300, false);
+    if (swiperRef.current) {
+      triggerSnapEffect(swiperRef.current);
     }
   };
 
@@ -160,12 +179,8 @@ export const Characters: React.FC = () => {
   };
 
   const handleMouseEnter02 = () => {
-    const swiper = swiperRef02.current;
-    if (swiper && swiper.autoplay) {
-      swiper.autoplay.stop();
-      swiper.params.speed = 300;
-      // swiper.setTransition(300);
-      swiper.slideToClosest(300, false);
+    if (swiperRef02.current) {
+      triggerSnapEffect(swiperRef02.current);
     }
   };
 
