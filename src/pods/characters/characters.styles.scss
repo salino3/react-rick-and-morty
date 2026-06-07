@@ -48,12 +48,15 @@
       border-radius: 1rem;
       left: 0;
       right: 0;
-
+      padding: 0.25rem;
       margin-inline: auto;
       width: 90cqw;
-
+      display: flex;
+      justify-content: center;
+      align-items: center;
       .swiper-pagination-bullet {
         background: gray;
+        padding: 0.5rem;
       }
 
       .swiper-pagination-bullet-active {
