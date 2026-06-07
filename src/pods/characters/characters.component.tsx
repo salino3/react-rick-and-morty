@@ -15,6 +15,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 //
 import "./characters.styles.scss";
+import { FormSearchCharacter } from "./components/form-search-character/form-search-character.component";
 
 export const Characters: React.FC = () => {
   const [divRef, dimensions] = useResizeObserver<HTMLDivElement>();
@@ -161,7 +162,10 @@ export const Characters: React.FC = () => {
   return (
     <div ref={divRef} className="rootCharacters">
       <h1>Characters!</h1>
-      <div
+
+      <FormSearchCharacter />
+
+      {/* <div
         className="carrouselResultsWrapper"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -178,8 +182,7 @@ export const Characters: React.FC = () => {
           </Swiper>
         )}
       </div>
-      {/*  */}
-      <div
+       <div
         className="carrouselResultsWrapper02"
         onMouseEnter={handleMouseEnter02}
         onMouseLeave={handleMouseLeave02}
@@ -195,7 +198,7 @@ export const Characters: React.FC = () => {
             ))}
           </Swiper>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
