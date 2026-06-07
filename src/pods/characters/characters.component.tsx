@@ -162,7 +162,7 @@ export const Characters: React.FC = () => {
     <div ref={divRef} className="rootCharacters">
       <h1>Characters!</h1>
       <div
-        className="carouselResultsWrapper"
+        className="carrouselResultsWrapper"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -180,7 +180,7 @@ export const Characters: React.FC = () => {
       </div>
       {/*  */}
       <div
-        className="carouselResultsWrapper02"
+        className="carrouselResultsWrapper02"
         onMouseEnter={handleMouseEnter02}
         onMouseLeave={handleMouseLeave02}
       >
