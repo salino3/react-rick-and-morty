@@ -32,7 +32,9 @@ export const CardCharacter: React.FC<Props> = ({ data }) => {
         </p>
         {data.type && (
           <p>
-            <span className="sr-only">Type: </span>
+            <span className="sr-only" data-testid="type-label">
+              Type:
+            </span>
             {data.type}
           </p>
         )}
