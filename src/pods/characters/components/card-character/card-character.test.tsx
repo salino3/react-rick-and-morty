@@ -104,6 +104,63 @@ describe("CardCharacter Component", () => {
     expect(screen.getByText("Super Scientist")).not.toBeNull();
   });
 
+  it("applies the 'sr-only' accessibility class to the Type label", () => {
+    const characterWithType: ResultCharacters = {
+      ...mockCharacter,
+      type: "Super Scientist",
+    };
+    render(<CardCharacter data={characterWithType} />);
+
+    // 1. Prove that screen readers can find and read it
+    const typeLabel = screen.getByText("Type:");
+    expect(typeLabel).toBeTruthy();
+
+    // 2. Prove it is visually hidden by ensuring it has the sr-only class
+    expect(typeLabel.classList.contains("sr-only")).toBe(true);
+
+    // 3. Prove that the value is rendered next to it
+    const typeValue = screen.getByText("Super Scientist");
+    expect(typeValue).toBeTruthy();
+  });
+
+  it("renders Type section so that ONLY screen readers can read it", () => {
+    const characterWithType: ResultCharacters = {
+      ...mockCharacter,
+      type: "Super Scientist",
+    };
+
+    // 1. Manually inject the .sr-only CSS rules into jsdom so Jest can read them
+    const style = document.createElement("style");
+    style.innerHTML = `
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+  `;
+    document.head.appendChild(style);
+
+    render(<CardCharacter data={characterWithType} />);
+
+    // 2. Prove screen readers can find it
+    const typeLabel = screen.getByTestId("type-label");
+    expect(typeLabel).toBeTruthy();
+
+    //  Double check the text content inside that specific element matches
+    expect(typeLabel.textContent).toContain("Type:");
+
+    // 3. Prove sighted users can not see it
+    const computedStyles = window.getComputedStyle(typeLabel);
+    expect(computedStyles.position).toBe("absolute");
+    expect(computedStyles.width).toBe("1px");
+    expect(computedStyles.height).toBe("1px");
+    expect(computedStyles.overflow).toBe("hidden");
+
+    // Clean up the style tag after the test finishes
+    document.head.removeChild(style);
+  });
+
   it("applies correct status indicator class for Dead status", () => {
     const deadCharacter: ResultCharacters = {
       ...mockCharacter,
