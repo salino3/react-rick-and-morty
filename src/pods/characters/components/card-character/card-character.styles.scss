@@ -13,4 +13,62 @@
   &:hover {
     border-color: #00ffcc;
   }
+
+  &:focus-visible {
+    outline: 3px solid #00ffcc;
+    outline-offset: 2px;
+  }
+
+  &__image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px 6px 0 0;
+  }
+
+  &__details {
+    padding: 12px;
+    font-size: 0.9rem;
+    text-align: left;
+
+    p {
+      margin: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
+
+// WCAG visually hidden utility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Status indicator styles
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #888;
+
+  &.status-alive {
+    background-color: #55cc44;
+  }
+
+  &.status-dead {
+    background-color: #d63d2e;
+  }
+
+  &.status-unknown {
+    background-color: #9e9e9e;
+  }
 }
