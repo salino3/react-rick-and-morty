@@ -2,10 +2,18 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { SubmitBasicBtn } from "./submit-search-button.component";
 
+let mockPending = false;
+
 vi.mock("react", async (importOriginal) => {
   const actualReact = await importOriginal<typeof import("react")>();
+  return { ...actualReact };
+});
+
+vi.mock("react-dom", async (importOriginal) => {
+  const actualReactDom = await importOriginal<typeof import("react-dom")>();
   return {
-    ...actualReact,
+    ...actualReactDom,
+    useFormStatus: () => ({ pending: mockPending }),
   };
 });
 
@@ -15,6 +23,10 @@ const renderComponent = (searchName = "") => {
 };
 
 describe("SubmitBasicBtn Component", () => {
+  beforeEach(() => {
+    mockPending = false;
+  });
+
   it("Check when component is mounted, there is visible the text 'Search Character' and the magnifying icon on the button", () => {
     renderComponent();
 
@@ -29,5 +41,17 @@ describe("SubmitBasicBtn Component", () => {
 
     expect(textBtn).not.toBe(null);
     expect(textBtn?.matches("Search Character"));
+  });
+
+  it("Check form is sending data, the button must change his text to 'Loading...' and it must be disabled", () => {
+    mockPending = true;
+
+    renderComponent();
+
+    const textBtn = screen.queryByText("Loading...");
+    expect(textBtn).not.toBeNull();
+
+    const button = screen.getByRole("button") as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
   });
 });
