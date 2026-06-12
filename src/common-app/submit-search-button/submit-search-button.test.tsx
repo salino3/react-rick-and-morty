@@ -75,4 +75,30 @@ describe("SubmitBasicBtn Component", () => {
 
     document.body.removeChild(inputContainer);
   });
+
+  it("The button must enabled if current input value 'liveValue' is different to 'searchName'", () => {
+    const inputContainer = document.createElement("input");
+
+    inputContainer.setAttribute("id", "name");
+    inputContainer.value = "sa";
+    document.body.appendChild(inputContainer);
+
+    mockPending = false;
+
+    renderComponent("sa");
+
+    fireEvent.input(inputContainer);
+
+    const button = screen.getByRole("button") as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
+
+    //
+    inputContainer.value = "sas";
+    document.body.appendChild(inputContainer);
+
+    fireEvent.input(inputContainer);
+    expect(button.disabled).toBe(false);
+
+    document.body.removeChild(inputContainer);
+  });
 });
