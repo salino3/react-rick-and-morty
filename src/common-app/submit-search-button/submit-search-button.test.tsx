@@ -18,6 +18,13 @@ describe("SubmitBasicBtn Component", () => {
   it("Check when component is mounted, there is visible the text 'Search Character' and the magnifying icon on the button", () => {
     renderComponent();
 
+    const iconAriaLbel = screen.queryByLabelText(/Magnifying Glass Icon/i);
+    expect(iconAriaLbel).not.toBeNull();
+
+    const iconDataTestId = screen.getByTestId("magnifying-glass-icon");
+    expect(iconDataTestId).toBeTruthy();
+
+    //
     const textBtn = screen.queryByText("Search Character");
 
     expect(textBtn).not.toBe(null);
