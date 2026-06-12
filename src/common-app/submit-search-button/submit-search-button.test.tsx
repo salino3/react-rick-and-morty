@@ -101,4 +101,24 @@ describe("SubmitBasicBtn Component", () => {
 
     document.body.removeChild(inputContainer);
   });
+
+  it("Should remove the input event listener when the component unmounts to prevent memory leaks", () => {
+    const inputElement = document.createElement("input");
+    inputElement.setAttribute("id", "name");
+    document.body.appendChild(inputElement);
+
+    const removeListenerSpy = vi.spyOn(inputElement, "removeEventListener");
+
+    const { unmount } = renderComponent("sa");
+
+    unmount();
+
+    expect(removeListenerSpy).toHaveBeenCalledWith(
+      "input",
+      expect.any(Function),
+    );
+
+    removeListenerSpy.mockRestore();
+    document.body.removeChild(inputElement);
+  });
 });
