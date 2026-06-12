@@ -2,7 +2,8 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { SubmitBasicBtn } from "./submit-search-button.component";
 
-let mockPending = false;
+let mockPending: boolean = false;
+let mockFormData: FormData | null = null;
 
 vi.mock("react", async (importOriginal) => {
   const actualReact = await importOriginal<typeof import("react")>();
@@ -13,7 +14,7 @@ vi.mock("react-dom", async (importOriginal) => {
   const actualReactDom = await importOriginal<typeof import("react-dom")>();
   return {
     ...actualReactDom,
-    useFormStatus: () => ({ pending: mockPending }),
+    useFormStatus: () => ({ pending: mockPending, data: mockFormData }),
   };
 });
 
@@ -25,6 +26,7 @@ const renderComponent = (searchName = "") => {
 describe("SubmitBasicBtn Component", () => {
   beforeEach(() => {
     mockPending = false;
+    mockFormData = null;
   });
 
   it("Check when component is mounted, there is visible the text 'Search Character' and the magnifying icon on the button", () => {
@@ -53,5 +55,24 @@ describe("SubmitBasicBtn Component", () => {
 
     const button = screen.getByRole("button") as HTMLButtonElement;
     expect(button.disabled).toBe(true);
+  });
+
+  it("Avoid petition duplicated, if current input value 'liveValue' is egual to 'searchName', the button must be desabled", () => {
+    const inputContainer = document.createElement("input");
+
+    inputContainer.setAttribute("id", "name");
+    inputContainer.value = "sa";
+    document.body.appendChild(inputContainer);
+
+    mockPending = false;
+
+    renderComponent("sa");
+
+    fireEvent.input(inputContainer);
+
+    const button = screen.getByRole("button") as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
+
+    document.body.removeChild(inputContainer);
   });
 });
