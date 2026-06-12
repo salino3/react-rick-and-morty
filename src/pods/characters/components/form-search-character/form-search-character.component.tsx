@@ -30,7 +30,7 @@ export const FormSearchCharacter: React.FC<Props> = ({
 
   return (
     <form id="rootFormSearchCharacter" action={formAction}>
-      <fieldset disabled={isPending}>
+      <fieldset data-testid="form-fieldset" disabled={isPending}>
         <legend>Discover the Collection</legend>
         <div className="boxInput boxName">
           <input
